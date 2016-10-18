@@ -154,6 +154,20 @@ class Display_Medium_Posts {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		// Add menu item
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
+
+		// Add Settings link to the plugin
+		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_name . '.php' );
+		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
+
+		// Save/Update our plugin options
+		$this->loader->add_action('admin_init', $plugin_admin, 'options_update');
+
+		//Admin Customizations
+        $this->loader->add_action( 'login_enqueue_scripts', $plugin_admin, 'display_medium_posts_login_css' );
+
+
 	}
 
 	/**
@@ -167,8 +181,22 @@ class Display_Medium_Posts {
 
 		$plugin_public = new Display_Medium_Posts_Public( $this->get_plugin_name(), $this->get_version() );
 
+		/*
+
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		*/
+
+		$this->loader->add_action( 'init', $plugin_public, 'display_medium_posts_cleanup' );
+        $this->loader->add_action( 'wp_loaded', $plugin_public, 'display_medium_posts_remove_comments_inline_styles' );
+        $this->loader->add_action( 'wp_loaded', $plugin_public, 'display_medium_posts_remove_gallery_styles' );
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'display_medium_posts_cdn_jquery', PHP_INT_MAX);
+
+           //Filters
+        $this->loader->add_filter('wp_headers', $plugin_public, 'display_medium_posts_remove_x_pingback');
+        $this->loader->add_filter( 'body_class', $plugin_public, 'display_medium_posts_body_class_slug' );
+
+
 
 	}
 
