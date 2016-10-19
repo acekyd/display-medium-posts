@@ -75,6 +75,8 @@ class Display_Medium_Posts_Public {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/display-medium-posts-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'ace-owl-carousel', plugin_dir_url( __FILE__ ) . 'owl-carousel/owl.carousel.css', array(), $this->version, 'all' );
+        wp_enqueue_style( 'ace-owl-theme', plugin_dir_url( __FILE__ ) . 'owl-carousel/owl.theme.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,97 +98,11 @@ class Display_Medium_Posts_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		wp_enqueue_script( 'ace-owl-carousel-js', plugin_dir_url( __FILE__ ) . 'owl-carousel/owl.carousel.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/display-medium-posts-public.js', array( 'jquery' ), $this->version, true );
+		
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/display-medium-posts-public.js', array( 'jquery' ), $this->version, false );
 
 	}
-
-/**
-     * Cleanup functions depending on each checkbox returned value in admin
-     *
-     * @since    1.0.0
-     */
-    // Cleanup head
-    public function display_medium_posts_cleanup() {
-
-        if($this->display_medium_posts_options['cleanup']){
-
-
-            remove_action( 'wp_head', 'rsd_link' );                 // RSD link
-            remove_action( 'wp_head', 'feed_links_extra', 3 );            // Category feed link
-            remove_action( 'wp_head', 'feed_links', 2 );                // Post and comment feed links
-            remove_action( 'wp_head', 'index_rel_link' );
-            remove_action( 'wp_head', 'wlwmanifest_link' );
-            remove_action( 'wp_head', 'parent_post_rel_link', 10, 0 );        // Parent rel link
-            remove_action( 'wp_head', 'start_post_rel_link', 10, 0 );       // Start post rel link
-            remove_action( 'wp_head', 'rel_canonical', 10, 0 );
-            remove_action( 'wp_head', 'wp_shortlink_wp_head', 10, 0 );
-            remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 ); // Adjacent post rel link
-            remove_action( 'wp_head', 'wp_generator' );               // WP Version
-            remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-            remove_action( 'wp_print_styles', 'print_emoji_styles' );
-
-
-        }
-    }   
-    // Cleanup head
-    public function display_medium_posts_remove_x_pingback($headers) {
-        if(!empty($this->display_medium_posts_options['cleanup'])){
-            unset($headers['X-Pingback']);
-            return $headers;
-        }
-    }
-
-    // Remove Comment inline CSS
-    public function display_medium_posts_remove_comments_inline_styles() {
-        if(!empty($this->display_medium_posts_options['comments_css_cleanup'])){
-            global $wp_widget_factory;
-            if ( has_filter( 'wp_head', 'wp_widget_recent_comments_style' ) ) {
-                remove_filter( 'wp_head', 'wp_widget_recent_comments_style' );
-            }
-
-            if ( isset($wp_widget_factory->widgets['WP_Widget_Recent_Comments']) ) {
-                remove_action( 'wp_head', array($wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style') );
-            }
-        }
-    }
-
-    // Remove gallery inline CSS
-    public function display_medium_posts_remove_gallery_styles($css) {
-        if(!empty($this->display_medium_posts_options['gallery_css_cleanup'])){
-            return preg_replace( "!<style type='text/css'>(.*?)</style>!s", '', $css );
-        }
-
-    }
-
-
-    // Add post/page slug
-    public function display_medium_posts_body_class_slug( $classes ) {
-        if(!empty($this->display_medium_posts_options['body_class_slug'])){
-            global $post;
-            if(is_singular()){
-                $classes[] = $post->post_name;
-            }
-        }
-                return $classes;
-    }
-    
-    // Load jQuery from CDN if available
-    public function display_medium_posts_cdn_jquery(){
-        if(!empty($this->display_medium_posts_options['jquery_cdn'])){
-            if(!is_admin()){
-                            if(!empty($this->display_medium_posts_options['cdn_provider'])){
-                                $link = $this->display_medium_posts_options['cdn_provider'];
-                            }else{
-                                $link = 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js';
-                            }
-                            $try_url = @fopen($link,'r');
-                            if( $try_url !== false ) {
-                                wp_deregister_script( 'jquery' );
-                                wp_register_script('jquery', $link, array(), null, false);
-                            }
-            }
-        }
-    }
 
 }

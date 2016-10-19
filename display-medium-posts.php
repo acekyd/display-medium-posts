@@ -73,3 +73,57 @@ function run_display_medium_posts() {
 
 }
 run_display_medium_posts();
+
+    // Example 1 : WP Shortcode to display form on any page or post.
+    function posts_display($atts){
+    	 $a = shortcode_atts(array('handle'=>'-1'), $atts);
+        // No ID value
+        if(strcmp($a['handle'], '-1') == 0){
+                return "";
+        }
+        $handle=$a['handle'];
+
+        $data = file_get_contents("https://medium.com/".$handle."/latest?format=json"); 
+        $data = str_replace("])}while(1);</x>", "", $data);
+
+        $json = json_decode($data, true);
+
+        $json = json_decode($data);
+		$posts = $json->payload->references->Post;
+		$items = array();
+		$count = 0;
+		foreach($posts as $post)
+		{
+			$items[$count]['title'] = $post->title;
+			$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
+			$items[$count]['subtitle'] = $post->virtuals->snippet; 
+			$items[$count]['image'] = 'http://cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
+			$items[$count]['duration'] = round($post->virtuals->readingTime);
+			$items[$count]['date'] = $post->virtuals->createdAtRelative;
+
+			$count++;
+		}
+
+    ?>
+		<div id="owl-demo" class="owl-carousel">
+			<?php foreach($items as $item) { ?>
+		  	<div>
+		  		<img data-src="<?php echo $item['image']; ?>" class="lazyOwl">
+		  		<a href="<?php echo $item['url']; ?>">
+		  			<p class="details-title"><?php echo $item['title']; ?></p>
+		  		</a>
+		        <p>
+		            <?php echo $item['subtitle']; ?>
+		        </p>
+	            <p>
+	            	<?php echo $item['date']; ?> / <?php echo $item['duration']; ?>min read.
+		            <a href="<?php echo $item['url']; ?>" class="text-right">Read More</a>
+		        </p>
+		  	</div>
+
+			<?php } ?>
+		</div>
+        <?php
+    }
+    add_shortcode('display_medium_posts', 'posts_display');
+

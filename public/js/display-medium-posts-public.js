@@ -29,4 +29,9 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
+	 $(".owl-carousel").owlCarousel({
+	 	items: 3,
+	    lazyLoad : true,
+	  });
+
 })( jQuery );
