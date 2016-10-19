@@ -2,19 +2,19 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
-  #owl-demo .owl-item{
+  #display-medium-owl-demo .owl-item{
 	  padding-left:10px;
         padding-right:10px;
 	  border-right: 1px solid #ddd;
 	  padding-top:10px;
 	  padding-bottom:10px;
 	}
-	#owl-demo img{
+	#display-medium-owl-demo img{
 	  display: block;
 	  width: 100%;
 	  height: auto;
 	  max-height: 240px;
 	}
-	#owl-demo .details-title {
+	#display-medium-owl-demo .details-title {
 		border-bottom: 1px solid #212121;
 	}
