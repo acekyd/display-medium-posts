@@ -105,7 +105,7 @@ run_display_medium_posts();
 		}
 
     ?>
-		<div id="display-medium-owl-demo" class=".display-medium-owl-carousel">
+		<div id="display-medium-owl-demo" class="display-medium-owl-carousel">
 			<?php foreach($items as $item) { ?>
 		  	<div>
 		  		<img data-src="<?php echo $item['image']; ?>" class="lazyOwl">
