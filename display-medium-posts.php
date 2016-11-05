@@ -16,7 +16,7 @@
  * Plugin Name:       Display Medium Posts
  * Plugin URI:        https://github.com/acekyd/display-medium-posts
  * Description:       Display Medium Posts is a wordpress plugin that allows users display posts from medium.com on any part of their website.
- * Version:           1.0.0
+ * Version:           2.0.0
  * Author:            AceKYD
  * Author URI:        http://www.acekyd.com
  * License:           GPL-2.0+
@@ -76,12 +76,16 @@ run_display_medium_posts();
 
     // Example 1 : WP Shortcode to display form on any page or post.
     function posts_display($atts){
-    	 $a = shortcode_atts(array('handle'=>'-1'), $atts);
+    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'http://i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10), $atts);
         // No ID value
         if(strcmp($a['handle'], '-1') == 0){
                 return "";
         }
         $handle=$a['handle'];
+        $default_image = $a['default_image'];
+        $display = $a['display'];
+        $offset = $a['offset'];
+        $total = $a['total'];
 
         $data = file_get_contents("https://medium.com/".$handle."/latest?format=json"); 
         $data = str_replace("])}while(1);</x>", "", $data);
@@ -97,32 +101,58 @@ run_display_medium_posts();
 			$items[$count]['title'] = $post->title;
 			$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
 			$items[$count]['subtitle'] = $post->virtuals->snippet; 
-			$items[$count]['image'] = 'http://cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
+			if(!empty($post->virtuals->previewImage->imageId))
+			{
+				$image = 'http://cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
+			}
+			else {
+				$image = $default_image;
+			}
+			$items[$count]['image'] = $image;
 			$items[$count]['duration'] = round($post->virtuals->readingTime);
 			$items[$count]['date'] = $post->virtuals->createdAtRelative;
 
 			$count++;
 		}
+		if($offset)
+		{
+			$items = array_slice($items, $offset);  
+		}
+
+		if(count($items) > $total)
+		{
+			$items = array_slice($items, 0, $total); 
+		}
 
     ?>
 		<div id="display-medium-owl-demo" class="display-medium-owl-carousel">
 			<?php foreach($items as $item) { ?>
-		  	<div>
-		  		<img data-src="<?php echo $item['image']; ?>" class="lazyOwl">
+		  	<div class="display-medium-item">
 		  		<a href="<?php echo $item['url']; ?>">
-		  			<p class="details-title"><?php echo $item['title']; ?></p>
+		  			<img data-src="<?php echo $item['image']; ?>" class="lazyOwl">
+		  			<p class="display-medium-title details-title"><?php echo $item['title']; ?></p>
 		  		</a>
-		        <p>
+		        <p class="display-medium-subtitle">
 		            <?php echo $item['subtitle']; ?>
 		        </p>
-	            <p>
-	            	<?php echo $item['date']; ?> / <?php echo $item['duration']; ?>min read.
-		            <a href="<?php echo $item['url']; ?>" class="text-right">Read More</a>
+	            <p class="display-medium-date-read">
+	            	<?php echo "<span class='display-medium-date'>".$item['date']."</span>"; ?> / <?php echo "<span class='display-medium-readtime'>".$item['duration']."min read</span>"; ?>.
+		            <a href="<?php echo $item['url']; ?>" class="text-right display-medium-readmore">Read More</a>
 		        </p>
 		  	</div>
 
 			<?php } ?>
 		</div>
+		<script type="text/javascript">
+				function initializeOwl(count) {
+					 jQuery(".display-medium-owl-carousel").owlCarousel({
+					 	items: count,
+					    lazyLoad : true,
+					  });
+				}
+		</script>
+		<script>initializeOwl(<?php echo $display; ?>);</script>
+		
         <?php
     }
     add_shortcode('display_medium_posts', 'posts_display');
