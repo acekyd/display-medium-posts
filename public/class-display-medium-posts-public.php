@@ -75,8 +75,8 @@ class Display_Medium_Posts_Public {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/display-medium-posts-public.css', array(), $this->version, 'all' );
-		wp_enqueue_style( 'ace-owl-carousel', plugin_dir_url( __FILE__ ) . 'owl-carousel/owl.carousel.css', array(), $this->version, 'all' );
-        wp_enqueue_style( 'ace-owl-theme', plugin_dir_url( __FILE__ ) . 'owl-carousel/owl.theme.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'ace-owl-carousel', plugin_dir_url( __FILE__ ) . 'vendors/owl-carousel/owl.carousel.css', array(), $this->version, 'all' );
+        wp_enqueue_style( 'ace-owl-theme', plugin_dir_url( __FILE__ ) . 'vendors/owl-carousel/owl.theme.css', array(), $this->version, 'all' );
 
 	}
 
@@ -98,7 +98,7 @@ class Display_Medium_Posts_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_script( 'ace-owl-carousel-js', plugin_dir_url( __FILE__ ) . 'owl-carousel/owl.carousel.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'ace-owl-carousel-js', plugin_dir_url( __FILE__ ) . 'vendors/owl-carousel/owl.carousel.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/display-medium-posts-public.js', array( 'jquery' ), $this->version, true );
 		
 
