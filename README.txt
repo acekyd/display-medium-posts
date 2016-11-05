@@ -41,13 +41,20 @@ Nothing at the moment.
 2. Displayed latest medium posts on page.
 
 == Changelog ==
-Version 2.0.0
+= Version 2.0.0 =
+
 * Specify tags and css classes to allow users customize post display
+
 * Added option to specify total number of posts to be fetched
+
 * Added option to specify post offsets
+
 * Fixed broken images
+
 * Added option to specify custom user default images for broken images
+
 * Added option to customize number of posts to be in view in the carousel at a time
-Version 1.0.0.
+
+= Version 1.0.0. =
 
 * Display Posts in carousel
