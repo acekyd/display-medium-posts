@@ -155,7 +155,7 @@ run_display_medium_posts();
 		<?php
 			if(!$list)
 			{
-				echo '<script>initializeOwl(<?php echo $display; ?>);</script>';
+				echo '<script>initializeOwl('.$display.');</script>';
 			}
 		?>
         <?php

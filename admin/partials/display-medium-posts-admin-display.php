@@ -32,13 +32,17 @@
     	<li><b>display:</b> This is the amount of posts that should be displayed at a time e.g display=3</li>
     	<li><b>offset:</b> This is used when you don't want to display the most recent posts. You can specify the offset to skip the first number of items specified. Default is 0 e.g offset=2</li>
     	<li><b>total:</b> This is used to specify the amount of posts to fetch. Maximum is 10. This is also useful if you just want to display a single item e.g total=1</li>
+        <li><b>list:</b> If you would like to show the posts in a list instead of a carousel, set this value to true. Default value is false
     </ul>
 
     <p>
     	An example of a full use of the plugin is as follows:<br>
     	<b>
-    		[display_medium_posts handle="@acekyd" default_image="http://www.acekyd.com/wp-content/uploads/2014/11/IMG_20150731_220116.png" display=4 offset=2 total=10]
+    		[display_medium_posts handle="@acekyd" default_image="http://www.acekyd.com/wp-content/uploads/2014/11/IMG_20150731_220116.png" display=4 offset=2 total=10 list=false]
     	</b>
     </p>
-
+    <br><br>
+    <p>
+        <h4 style="color:red">If this plugin has helped you, don't hesitate to star the <a href="http://www.github.com/acekyd/display-medium-posts/" target="_blank">Github repo</a>. Cheers :)</h4>
+    </p>
 </div>

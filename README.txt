@@ -39,8 +39,13 @@ Nothing at the moment.
 == Screenshots ==
 1. Add shortcode to posts/page
 2. Displayed latest medium posts on page.
+3. Allowed users to choose between carousel or list displays.
 
 == Changelog ==
+= Version 2.0.2 =
+
+* Choose to display posts in list format
+
 = Version 2.0.0 =
 
 * Specify tags and css classes to allow users customize post display
