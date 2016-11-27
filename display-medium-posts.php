@@ -76,7 +76,7 @@ run_display_medium_posts();
 
     // Example 1 : WP Shortcode to display form on any page or post.
     function posts_display($atts){
-    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'http://i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10), $atts);
+    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'http://i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false), $atts);
         // No ID value
         if(strcmp($a['handle'], '-1') == 0){
                 return "";
@@ -86,6 +86,7 @@ run_display_medium_posts();
         $display = $a['display'];
         $offset = $a['offset'];
         $total = $a['total'];
+        $list = $a['list'];
 
         $data = file_get_contents("https://medium.com/".$handle."/latest?format=json"); 
         $data = str_replace("])}while(1);</x>", "", $data);
@@ -151,8 +152,12 @@ run_display_medium_posts();
 					  });
 				}
 		</script>
-		<script>initializeOwl(<?php echo $display; ?>);</script>
-		
+		<?php
+			if(!$list)
+			{
+				echo '<script>initializeOwl(<?php echo $display; ?>);</script>';
+			}
+		?>
         <?php
     }
     add_shortcode('display_medium_posts', 'posts_display');
