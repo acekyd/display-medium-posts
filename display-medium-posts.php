@@ -101,17 +101,17 @@ run_display_medium_posts();
 		{
 			$items[$count]['title'] = $post->title;
 			$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
-			$items[$count]['subtitle'] = $post->virtuals->snippet; 
+			$items[$count]['subtitle'] = isset($post->content->subtitle) ? $post->content->subtitle : "";
 			if(!empty($post->virtuals->previewImage->imageId))
 			{
-				$image = 'http://cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
+				$image = 'http://cdn-images.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
 			}
 			else {
 				$image = $default_image;
 			}
 			$items[$count]['image'] = $image;
 			$items[$count]['duration'] = round($post->virtuals->readingTime);
-			$items[$count]['date'] = $post->virtuals->createdAtRelative;
+			$items[$count]['date'] = isset($post->createdAt) ? date('Y.m.d', $post->createdAt/1000): "";
 
 			$count++;
 		}
