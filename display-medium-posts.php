@@ -101,7 +101,7 @@ run_display_medium_posts();
 		{
 			$items[$count]['title'] = $post->title;
 			$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
-			$items[$count]['subtitle'] = $post->virtuals->snippet; 
+			$items[$count]['subtitle'] = (isset($post->virtuals->snippet)) ? $post->virtuals->snippet : ''; 
 			if(!empty($post->virtuals->previewImage->imageId))
 			{
 				$image = 'http://cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
@@ -111,7 +111,7 @@ run_display_medium_posts();
 			}
 			$items[$count]['image'] = $image;
 			$items[$count]['duration'] = round($post->virtuals->readingTime);
-			$items[$count]['date'] = $post->virtuals->createdAtRelative;
+			$items[$count]['date'] = (isset($post->virtuals->createdAtRelative)) ? $post->virtuals->createdAtRelative : '';
 
 			$count++;
 		}
