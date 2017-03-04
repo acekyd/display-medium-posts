@@ -86,7 +86,7 @@ run_display_medium_posts();
         $display = $a['display'];
         $offset = $a['offset'];
         $total = $a['total'];
-        $list = $a['list'];
+        $list = $a['list'] =='false' ? false: $a['list'];
 
         $data = file_get_contents("https://medium.com/".$handle."/latest?format=json"); 
         $data = str_replace("])}while(1);</x>", "", $data);
