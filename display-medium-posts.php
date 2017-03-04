@@ -148,7 +148,7 @@ run_display_medium_posts();
 				}
 				$items[$count]['image'] = $image;
 				$items[$count]['duration'] = round($post->virtuals->readingTime);
-				$items[$count]['date'] = isset($post->createdAt) ? date('Y.m.d', $post->createdAt/1000): "";
+				$items[$count]['date'] = isset($post->firstPublishedAt) ? date('Y.m.d', $post->firstPublishedAt/1000): "";
 
 				$count++;
 			}
