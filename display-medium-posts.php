@@ -76,7 +76,7 @@ run_display_medium_posts();
 
     // Example 1 : WP Shortcode to display form on any page or post.
     function posts_display($atts){
-    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'http://i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false), $atts);
+    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'http://i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false, 'publication' => false), $atts);
         // No ID value
         if(strcmp($a['handle'], '-1') == 0){
                 return "";
@@ -87,44 +87,81 @@ run_display_medium_posts();
         $offset = $a['offset'];
         $total = $a['total'];
         $list = $a['list'] =='false' ? false: $a['list'];
+        $publication = $a['publication'] =='false' ? false: $a['publication'];
 
-        $data = file_get_contents("https://medium.com/".$handle."/latest?format=json"); 
+        $data = file_get_contents("https://medium.com/".$handle."/latest?format=json");
         $data = str_replace("])}while(1);</x>", "", $data);
+        if($publication) {
+        	//If handle provided is specified as a publication
+	        $json = json_decode($data, true);
 
-        $json = json_decode($data, true);
-
-        $json = json_decode($data);
-		$posts = $json->payload->references->Post;
-		$items = array();
-		$count = 0;
-		foreach($posts as $post)
-		{
-			$items[$count]['title'] = $post->title;
-			$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
-			$items[$count]['subtitle'] = isset($post->content->subtitle) ? $post->content->subtitle : "";
-			if(!empty($post->virtuals->previewImage->imageId))
+	        $json = json_decode($data);
+			$posts = $json->payload->posts;
+			$items = array();
+			$count = 0;
+			foreach($posts as $post)
 			{
-				$image = 'http://cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
+				$items[$count]['title'] = $post->title;
+				$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
+				$items[$count]['subtitle'] = isset($post->virtuals->subtitle) ? $post->virtuals->subtitle : "";
+				if(!empty($post->virtuals->previewImage->imageId))
+				{
+					$image = 'http://cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
+				}
+				else {
+					$image = $default_image;
+				}
+				$items[$count]['image'] = $image;
+				$items[$count]['duration'] = round($post->virtuals->readingTime);
+				$items[$count]['date'] = isset($post->firstPublishedAt) ? date('Y.m.d', $post->firstPublishedAt/1000): "";
+
+				$count++;
 			}
-			else {
-				$image = $default_image;
+			if($offset)
+			{
+				$items = array_slice($items, $offset);  
 			}
-			$items[$count]['image'] = $image;
-			$items[$count]['duration'] = round($post->virtuals->readingTime);
-			$items[$count]['date'] = isset($post->createdAt) ? date('Y.m.d', $post->createdAt/1000): "";
 
-			$count++;
-		}
-		if($offset)
-		{
-			$items = array_slice($items, $offset);  
-		}
+			if(count($items) > $total)
+			{
+				$items = array_slice($items, 0, $total); 
+			}
+        }
+        else {
+	        $json = json_decode($data, true);
 
-		if(count($items) > $total)
-		{
-			$items = array_slice($items, 0, $total); 
-		}
+	        $json = json_decode($data);
+			$posts = $json->payload->references->Post;
+			$items = array();
+			$count = 0;
+			foreach($posts as $post)
+			{
+				$items[$count]['title'] = $post->title;
+				$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
+				$items[$count]['subtitle'] = isset($post->content->subtitle) ? $post->content->subtitle : "";
+				if(!empty($post->virtuals->previewImage->imageId))
+				{
+					$image = 'http://cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
+				}
+				else {
+					$image = $default_image;
+				}
+				$items[$count]['image'] = $image;
+				$items[$count]['duration'] = round($post->virtuals->readingTime);
+				$items[$count]['date'] = isset($post->createdAt) ? date('Y.m.d', $post->createdAt/1000): "";
 
+				$count++;
+			}
+			if($offset)
+			{
+				$items = array_slice($items, $offset);  
+			}
+
+			if(count($items) > $total)
+			{
+				$items = array_slice($items, 0, $total); 
+			}
+        }
     ?>
 		<div id="display-medium-owl-demo" class="display-medium-owl-carousel">
 			<?php foreach($items as $item) { ?>
