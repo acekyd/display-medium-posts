@@ -42,6 +42,21 @@ Nothing at the moment.
 3. Allowed users to choose between carousel or list displays.
 
 == Changelog ==
+
+= Version 3.0 =
+
+* Added Feature to fetch posts from publications.
+* Updated date displayed to date published from date created at.
+* Updated Admin dashboard with more details
+
+
+
+= Version 2.1 =
+
+* Updated code to match medium's new structure
+* Fixed bugs with list display
+
+
 = Version 2.0.2 =
 
 * Choose to display posts in list format
