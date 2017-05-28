@@ -167,7 +167,7 @@ run_display_medium_posts();
 		<div id="display-medium-owl-demo" class="display-medium-owl-carousel">
 			<?php foreach($items as $item) { ?>
 		  	<div class="display-medium-item">
-		  		<a href="<?php echo $item['url']; ?>">
+		  		<a href="<?php echo $item['url']; ?>" target="_blank">
 		  			<img data-src="<?php echo $item['image']; ?>" class="lazyOwl">
 		  			<?php 
 		  				if($list)
@@ -182,7 +182,7 @@ run_display_medium_posts();
 		        </p>
 	            <p class="display-medium-date-read">
 	            	<?php echo "<span class='display-medium-date'>".$item['date']."</span>"; ?> / <?php echo "<span class='display-medium-readtime'>".$item['duration']."min read</span>"; ?>.
-		            <a href="<?php echo $item['url']; ?>" class="text-right display-medium-readmore">Read More</a>
+		            <a href="<?php echo $item['url']; ?>" target="_blank" class="text-right display-medium-readmore">Read More</a>
 		        </p>
 		  	</div>
 
