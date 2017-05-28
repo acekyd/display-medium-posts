@@ -94,73 +94,76 @@ run_display_medium_posts();
         $data = str_replace("])}while(1);</x>", "", $data);
         if($publication) {
         	//If handle provided is specified as a publication
-	        $json = json_decode($data, true);
-
 	        $json = json_decode($data);
-			$posts = $json->payload->posts;
 			$items = array();
 			$count = 0;
-			foreach($posts as $post)
+			if(isset($json->payload->posts))
 			{
-				$items[$count]['title'] = $post->title;
-				$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
-				$items[$count]['subtitle'] = isset($post->virtuals->subtitle) ? $post->virtuals->subtitle : "";
-				if(!empty($post->virtuals->previewImage->imageId))
+				$posts = $json->payload->posts;
+				foreach($posts as $post)
 				{
-					$image = 'http://cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
-				}
-				else {
-					$image = $default_image;
-				}
-				$items[$count]['image'] = $image;
-				$items[$count]['duration'] = round($post->virtuals->readingTime);
-				$items[$count]['date'] = isset($post->firstPublishedAt) ? date('Y.m.d', $post->firstPublishedAt/1000): "";
+					$items[$count]['title'] = $post->title;
+					$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
+					$items[$count]['subtitle'] = isset($post->virtuals->subtitle) ? $post->virtuals->subtitle : "";
+					if(!empty($post->virtuals->previewImage->imageId))
+					{
+						$image = 'http://cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
+					}
+					else {
+						$image = $default_image;
+					}
+					$items[$count]['image'] = $image;
+					$items[$count]['duration'] = round($post->virtuals->readingTime);
+					$items[$count]['date'] = isset($post->firstPublishedAt) ? date('Y.m.d', $post->firstPublishedAt/1000): "";
 
-				$count++;
-			}
-			if($offset)
-			{
-				$items = array_slice($items, $offset);  
-			}
+					$count++;
+				}
+				if($offset)
+				{
+					$items = array_slice($items, $offset);  
+				}
 
-			if(count($items) > $total)
-			{
-				$items = array_slice($items, 0, $total); 
+				if(count($items) > $total)
+				{
+					$items = array_slice($items, 0, $total); 
+				}
 			}
         }
         else {
-	        $json = json_decode($data, true);
 
 	        $json = json_decode($data);
-			$posts = $json->payload->references->Post;
 			$items = array();
 			$count = 0;
-			foreach($posts as $post)
+			if(isset($json->payload->references->Post))
 			{
-				$items[$count]['title'] = $post->title;
-				$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
-				$items[$count]['subtitle'] = isset($post->content->subtitle) ? $post->content->subtitle : "";
-				if(!empty($post->virtuals->previewImage->imageId))
+				$posts = $json->payload->references->Post;
+				foreach($posts as $post)
 				{
-					$image = 'http://cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
-				}
-				else {
-					$image = $default_image;
-				}
-				$items[$count]['image'] = $image;
-				$items[$count]['duration'] = round($post->virtuals->readingTime);
-				$items[$count]['date'] = isset($post->firstPublishedAt) ? date('Y.m.d', $post->firstPublishedAt/1000): "";
+					$items[$count]['title'] = $post->title;
+					$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
+					$items[$count]['subtitle'] = isset($post->content->subtitle) ? $post->content->subtitle : "";
+					if(!empty($post->virtuals->previewImage->imageId))
+					{
+						$image = 'http://cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
+					}
+					else {
+						$image = $default_image;
+					}
+					$items[$count]['image'] = $image;
+					$items[$count]['duration'] = round($post->virtuals->readingTime);
+					$items[$count]['date'] = isset($post->firstPublishedAt) ? date('Y.m.d', $post->firstPublishedAt/1000): "";
 
-				$count++;
-			}
-			if($offset)
-			{
-				$items = array_slice($items, $offset);  
-			}
+					$count++;
+				}
+				if($offset)
+				{
+					$items = array_slice($items, $offset);  
+				}
 
-			if(count($items) > $total)
-			{
-				$items = array_slice($items, 0, $total); 
+				if(count($items) > $total)
+				{
+					$items = array_slice($items, 0, $total); 
+				}
 			}
         }
     	?>
@@ -188,6 +191,9 @@ run_display_medium_posts();
 
 			<?php } ?>
 		</div>
+		<?php
+	  		if(empty($items)) echo "<div class='display-medium-no-post'>No posts found!</div>";
+	  	?>
 		<script type="text/javascript">
 				function initializeOwl(count) {
 					 jQuery(".display-medium-owl-carousel").owlCarousel({
