@@ -169,6 +169,12 @@ run_display_medium_posts();
 		  	<div class="display-medium-item">
 		  		<a href="<?php echo $item['url']; ?>">
 		  			<img data-src="<?php echo $item['image']; ?>" class="lazyOwl">
+		  			<?php 
+		  				if($list)
+		  				{
+		  					echo '<img src="'.$item['image'].'" class="display-medium-img">';
+		  				}
+		  			?>
 		  			<p class="display-medium-title details-title"><?php echo $item['title']; ?></p>
 		  		</a>
 		        <p class="display-medium-subtitle">
