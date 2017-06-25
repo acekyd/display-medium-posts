@@ -43,6 +43,14 @@ Nothing at the moment.
 
 == Changelog ==
 
+= Version 3.5 =
+
+* Stopped posts from appearing above other content in some cames
+* Images now appear in list mode.
+* Links now open in new tab.
+* Show proper message instead of error when no posts are found.
+
+
 = Version 3.0 =
 
 * Added Feature to fetch posts from publications.
