@@ -77,7 +77,7 @@ run_display_medium_posts();
     // Example 1 : WP Shortcode to display form on any page or post.
     function posts_display($atts){
     	ob_start();
-    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'http://i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false, 'publication' => false), $atts);
+    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'//i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false, 'publication' => false), $atts);
         // No ID value
         if(strcmp($a['handle'], '-1') == 0){
                 return "";
