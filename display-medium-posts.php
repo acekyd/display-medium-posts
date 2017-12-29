@@ -171,12 +171,16 @@ run_display_medium_posts();
 			<?php foreach($items as $item) { ?>
 		  	<div class="display-medium-item">
 		  		<a href="<?php echo $item['url']; ?>" target="_blank">
-		  			<img data-src="<?php echo $item['image']; ?>" class="lazyOwl">
+		  			
 		  			<?php 
 		  				if($list)
 		  				{
 		  					echo '<img src="'.$item['image'].'" class="display-medium-img">';
-		  				}
+						}
+						else
+						{
+							echo '<div data-src="'.$item['image'].'" class="lazyOwl medium-image"></div>';
+						}
 		  			?>
 		  			<p class="display-medium-title details-title"><?php echo $item['title']; ?></p>
 		  		</a>
