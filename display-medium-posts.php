@@ -77,7 +77,7 @@ run_display_medium_posts();
     // Example 1 : WP Shortcode to display form on any page or post.
     function posts_display($atts){
     	ob_start();
-    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'//i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false, 'publication' => false), $atts);
+    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'//i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false, 'publication' => false, 'title_tag' => 'p'), $atts);
         // No ID value
         if(strcmp($a['handle'], '-1') == 0){
                 return "";
@@ -88,7 +88,8 @@ run_display_medium_posts();
         $offset = $a['offset'];
         $total = $a['total'];
         $list = $a['list'] =='false' ? false: $a['list'];
-        $publication = $a['publication'] =='false' ? false: $a['publication'];
+		$publication = $a['publication'] =='false' ? false: $a['publication'];
+		$title_tag = $a['title_tag'];
 
         $data = file_get_contents("https://medium.com/".$handle."/latest?format=json");
         $data = str_replace("])}while(1);</x>", "", $data);
@@ -178,7 +179,7 @@ run_display_medium_posts();
 		  					echo '<img src="'.$item['image'].'" class="display-medium-img">';
 		  				}
 		  			?>
-		  			<p class="display-medium-title details-title"><?php echo $item['title']; ?></p>
+		  			<<?php echo $title_tag; ?> class="display-medium-title details-title"><?php echo $item['title']; ?></<?php echo $title_tag; ?>>
 		  		</a>
 		        <p class="display-medium-subtitle">
 		            <?php echo $item['subtitle']; ?>
