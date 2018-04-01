@@ -91,8 +91,12 @@ run_display_medium_posts();
 		$publication = $a['publication'] =='false' ? false: $a['publication'];
 		$title_tag = $a['title_tag'];
 
-        $data = file_get_contents("https://medium.com/".$handle."/latest?format=json");
-        $data = str_replace("])}while(1);</x>", "", $data);
+		$ch = curl_init("https://medium.com/" . $handle . "/latest?format=json");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$result = curl_exec($ch);
+
+		$data = str_replace("])}while(1);</x>", "", $result);
+
         if($publication) {
         	//If handle provided is specified as a publication
 	        $json = json_decode($data);
@@ -121,12 +125,12 @@ run_display_medium_posts();
 				}
 				if($offset)
 				{
-					$items = array_slice($items, $offset);  
+					$items = array_slice($items, $offset);
 				}
 
 				if(count($items) > $total)
 				{
-					$items = array_slice($items, 0, $total); 
+					$items = array_slice($items, 0, $total);
 				}
 			}
         }
@@ -158,12 +162,12 @@ run_display_medium_posts();
 				}
 				if($offset)
 				{
-					$items = array_slice($items, $offset);  
+					$items = array_slice($items, $offset);
 				}
 
 				if(count($items) > $total)
 				{
-					$items = array_slice($items, 0, $total); 
+					$items = array_slice($items, 0, $total);
 				}
 			}
         }
@@ -172,8 +176,8 @@ run_display_medium_posts();
 			<?php foreach($items as $item) { ?>
 		  	<div class="display-medium-item">
 		  		<a href="<?php echo $item['url']; ?>" target="_blank">
-		  			
-		  			<?php 
+
+		  			<?php
 		  				if($list)
 		  				{
 		  					echo '<img src="'.$item['image'].'" class="display-medium-img">';
@@ -217,4 +221,3 @@ run_display_medium_posts();
         return ob_get_clean();
     }
     add_shortcode('display_medium_posts', 'posts_display');
-

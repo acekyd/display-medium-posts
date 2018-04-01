@@ -37,7 +37,7 @@
 
                     <h4>Advanced Usage and Customization</h4>
                     <p>There are additional features that can be implemented using Display Medium Posts : </p>
-                    <ul>    
+                    <ul>
                         <li><b>handle:</b> This is the user's medium handle e.g <strong>@acekyd</strong> or publication handle e.g <strong>devcenter</strong> <i>(Required)</i></li>
                         <li><b>publication:</b> If you would like to show the posts of a publication's specified handle, set this value to true. Default value is false</li>
                         <li><b>default_image:</b> This is the url of default image that should show when post doesn't have a featured image e.g http://i.imgur.com/p4juyuT.png</li>
@@ -58,14 +58,14 @@
                     <p>
                         An example of a full use of the plugin is as follows:<br><br>
                         <strong>User - </strong><br><br>
-                    
+
                             [display_medium_posts handle="@acekyd" default_image="http://www.acekyd.com/wp-content/uploads/2014/11/IMG_20150731_220116.png" display=4 offset=2 total=10 list=false title_tag="h2"]
-                       
+
                         <br><br>
                         <strong>Publication - </strong><br><br>
-                   
+
                             [display_medium_posts handle="devcenter" publication=true default_image="http://www.acekyd.com/wp-content/uploads/2014/11/IMG_20150731_220116.png" display=4 offset=2 total=10 list=false title_tag="h2"]
-             
+
                     </p>
                     <br><br>
                     <p>
