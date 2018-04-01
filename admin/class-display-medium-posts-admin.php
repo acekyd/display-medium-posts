@@ -76,7 +76,7 @@ class Display_Medium_Posts_Admin {
 
 		if ( 'settings_page_display-medium-posts' == get_current_screen() -> id ) {
              // CSS stylesheet for Color Picker
-             wp_enqueue_style( 'wp-color-picker' );            
+             wp_enqueue_style( 'wp-color-picker' );
              wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/display-medium-posts-admin.css', array( 'wp-color-picker' ), $this->version, 'all' );
          }
 
@@ -103,8 +103,8 @@ class Display_Medium_Posts_Admin {
 		 */
 
 		if ( 'settings_page_display-medium-posts' == get_current_screen() -> id ) {
-            wp_enqueue_media();   
-            wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/display-medium-posts-admin.js', array( 'jquery', 'wp-color-picker' ), $this->version, false );         
+            wp_enqueue_media();
+            wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/display-medium-posts-admin.js', array( 'jquery', 'wp-color-picker' ), $this->version, false );
         }
 
 	}
@@ -114,7 +114,7 @@ class Display_Medium_Posts_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	 
+
 	public function add_plugin_admin_menu() {
 
 	    /*
@@ -134,7 +134,7 @@ class Display_Medium_Posts_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	 
+
 	public function add_action_links( $links ) {
 	    /*
 	    *  Documentation : https://codex.wordpress.org/Plugin_API/Filter_Reference/plugin_action_links_(plugin_file_name)
@@ -151,7 +151,7 @@ class Display_Medium_Posts_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	 
+
 	public function display_plugin_setup_page() {
 	    include_once( 'partials/display-medium-posts-admin-display.php' );
 	}

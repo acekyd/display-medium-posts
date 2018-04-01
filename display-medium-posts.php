@@ -74,144 +74,150 @@ function run_display_medium_posts() {
 }
 run_display_medium_posts();
 
-// Example 1 : WP Shortcode to display form on any page or post.
-function posts_display($atts){
-	ob_start();
-	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'//i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false, 'publication' => false), $atts);
-    // No ID value
-    if(strcmp($a['handle'], '-1') == 0){
-            return "";
-    }
-    $handle=$a['handle'];
-    $default_image = $a['default_image'];
-    $display = $a['display'];
-    $offset = $a['offset'];
-    $total = $a['total'];
-    $list = $a['list'] =='false' ? false: $a['list'];
-    $publication = $a['publication'] =='false' ? false: $a['publication'];
+    // Example 1 : WP Shortcode to display form on any page or post.
+    function posts_display($atts){
+    	ob_start();
+    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'//i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false, 'publication' => false, 'title_tag' => 'p'), $atts);
+        // No ID value
+        if(strcmp($a['handle'], '-1') == 0){
+                return "";
+        }
+        $handle=$a['handle'];
+        $default_image = $a['default_image'];
+        $display = $a['display'];
+        $offset = $a['offset'];
+        $total = $a['total'];
+        $list = $a['list'] =='false' ? false: $a['list'];
+		$publication = $a['publication'] =='false' ? false: $a['publication'];
+		$title_tag = $a['title_tag'];
 
-	$ch = curl_init("https://medium.com/" . $handle . "/latest?format=json");
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	$result = curl_exec($ch);
+		$ch = curl_init("https://medium.com/" . $handle . "/latest?format=json");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$result = curl_exec($ch);
 
-    $data = str_replace("])}while(1);</x>", "", $result);
-    if($publication) {
-    	//If handle provided is specified as a publication
-        $json = json_decode($data);
-		$items = array();
-		$count = 0;
-		if(isset($json->payload->posts))
-		{
-			$posts = $json->payload->posts;
-			foreach($posts as $post)
+		$data = str_replace("])}while(1);</x>", "", $result);
+
+        if($publication) {
+        	//If handle provided is specified as a publication
+	        $json = json_decode($data);
+			$items = array();
+			$count = 0;
+			if(isset($json->payload->posts))
 			{
-				$items[$count]['title'] = $post->title;
-				$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
-				$items[$count]['subtitle'] = isset($post->virtuals->subtitle) ? $post->virtuals->subtitle : "";
-				if(!empty($post->virtuals->previewImage->imageId))
+				$posts = $json->payload->posts;
+				foreach($posts as $post)
 				{
-					$image = '//cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
+					$items[$count]['title'] = $post->title;
+					$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
+					$items[$count]['subtitle'] = isset($post->virtuals->subtitle) ? $post->virtuals->subtitle : "";
+					if(!empty($post->virtuals->previewImage->imageId))
+					{
+						$image = '//cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
+					}
+					else {
+						$image = $default_image;
+					}
+					$items[$count]['image'] = $image;
+					$items[$count]['duration'] = round($post->virtuals->readingTime);
+					$items[$count]['date'] = isset($post->firstPublishedAt) ? date('Y.m.d', $post->firstPublishedAt/1000): "";
+
+					$count++;
 				}
-				else {
-					$image = $default_image;
-				}
-				$items[$count]['image'] = $image;
-				$items[$count]['duration'] = round($post->virtuals->readingTime);
-				$items[$count]['date'] = isset($post->firstPublishedAt) ? date('Y.m.d', $post->firstPublishedAt/1000): "";
-
-				$count++;
-			}
-			if($offset)
-			{
-				$items = array_slice($items, $offset);
-			}
-
-			if(count($items) > $total)
-			{
-				$items = array_slice($items, 0, $total);
-			}
-		}
-    }
-    else {
-
-        $json = json_decode($data);
-		$items = array();
-		$count = 0;
-		if(isset($json->payload->references->Post))
-		{
-			$posts = $json->payload->references->Post;
-			foreach($posts as $post)
-			{
-				$items[$count]['title'] = $post->title;
-				$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
-				$items[$count]['subtitle'] = isset($post->content->subtitle) ? $post->content->subtitle : "";
-				if(!empty($post->virtuals->previewImage->imageId))
+				if($offset)
 				{
-					$image = '//cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
+					$items = array_slice($items, $offset);
 				}
-				else {
-					$image = $default_image;
+
+				if(count($items) > $total)
+				{
+					$items = array_slice($items, 0, $total);
 				}
-				$items[$count]['image'] = $image;
-				$items[$count]['duration'] = round($post->virtuals->readingTime);
-				$items[$count]['date'] = isset($post->firstPublishedAt) ? date('Y.m.d', $post->firstPublishedAt/1000): "";
+			}
+        }
+        else {
 
-				$count++;
-			}
-			if($offset)
+	        $json = json_decode($data);
+			$items = array();
+			$count = 0;
+			if(isset($json->payload->references->Post))
 			{
-				$items = array_slice($items, $offset);
-			}
+				$posts = $json->payload->references->Post;
+				foreach($posts as $post)
+				{
+					$items[$count]['title'] = $post->title;
+					$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
+					$items[$count]['subtitle'] = isset($post->content->subtitle) ? $post->content->subtitle : "";
+					if(!empty($post->virtuals->previewImage->imageId))
+					{
+						$image = '//cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
+					}
+					else {
+						$image = $default_image;
+					}
+					$items[$count]['image'] = $image;
+					$items[$count]['duration'] = round($post->virtuals->readingTime);
+					$items[$count]['date'] = isset($post->firstPublishedAt) ? date('Y.m.d', $post->firstPublishedAt/1000): "";
 
-			if(count($items) > $total)
-			{
-				$items = array_slice($items, 0, $total);
+					$count++;
+				}
+				if($offset)
+				{
+					$items = array_slice($items, $offset);
+				}
+
+				if(count($items) > $total)
+				{
+					$items = array_slice($items, 0, $total);
+				}
 			}
-		}
+        }
+    	?>
+		<div id="display-medium-owl-demo" class="display-medium-owl-carousel">
+			<?php foreach($items as $item) { ?>
+		  	<div class="display-medium-item">
+		  		<a href="<?php echo $item['url']; ?>" target="_blank">
+
+		  			<?php
+		  				if($list)
+		  				{
+		  					echo '<img src="'.$item['image'].'" class="display-medium-img">';
+						}
+						else
+						{
+							echo '<div data-src="'.$item['image'].'" class="lazyOwl medium-image"></div>';
+						}
+		  			?>
+		  			<<?php echo $title_tag; ?> class="display-medium-title details-title"><?php echo $item['title']; ?></<?php echo $title_tag; ?>>
+		  		</a>
+		        <p class="display-medium-subtitle">
+		            <?php echo $item['subtitle']; ?>
+		        </p>
+	            <p class="display-medium-date-read">
+	            	<?php echo "<span class='display-medium-date'>".$item['date']."</span>"; ?> / <?php echo "<span class='display-medium-readtime'>".$item['duration']."min read</span>"; ?>.
+		            <a href="<?php echo $item['url']; ?>" target="_blank" class="text-right display-medium-readmore">Read More</a>
+		        </p>
+		  	</div>
+
+			<?php } ?>
+		</div>
+		<?php
+	  		if(empty($items)) echo "<div class='display-medium-no-post'>No posts found!</div>";
+	  	?>
+		<script type="text/javascript">
+				function initializeOwl(count) {
+					 jQuery(".display-medium-owl-carousel").owlCarousel({
+					 	items: count,
+					    lazyLoad : true,
+					  });
+				}
+		</script>
+		<?php
+			if(!$list)
+			{
+				echo '<script>initializeOwl('.$display.');</script>';
+			}
+		?>
+        <?php
+        return ob_get_clean();
     }
-	?>
-	<div id="display-medium-owl-demo" class="display-medium-owl-carousel">
-		<?php foreach($items as $item) { ?>
-	  	<div class="display-medium-item">
-	  		<a href="<?php echo $item['url']; ?>" target="_blank">
-	  			<img data-src="<?php echo $item['image']; ?>" class="lazyOwl">
-	  			<?php
-	  				if($list)
-	  				{
-	  					echo '<img src="'.$item['image'].'" class="display-medium-img">';
-	  				}
-	  			?>
-	  			<p class="display-medium-title details-title"><?php echo $item['title']; ?></p>
-	  		</a>
-	        <p class="display-medium-subtitle">
-	            <?php echo $item['subtitle']; ?>
-	        </p>
-            <p class="display-medium-date-read">
-            	<?php echo "<span class='display-medium-date'>".$item['date']."</span>"; ?> / <?php echo "<span class='display-medium-readtime'>".$item['duration']."min read</span>"; ?>.
-	            <a href="<?php echo $item['url']; ?>" target="_blank" class="text-right display-medium-readmore">Read More</a>
-	        </p>
-	  	</div>
-
-		<?php } ?>
-	</div>
-	<?php
-  		if(empty($items)) echo "<div class='display-medium-no-post'>No posts found!</div>";
-  	?>
-	<script type="text/javascript">
-			function initializeOwl(count) {
-				 jQuery(".display-medium-owl-carousel").owlCarousel({
-				 	items: count,
-				    lazyLoad : true,
-				  });
-			}
-	</script>
-	<?php
-		if(!$list)
-		{
-			echo '<script>initializeOwl('.$display.');</script>';
-		}
-	?>
-    <?php
-    return ob_get_clean();
-}
-add_shortcode('display_medium_posts', 'posts_display');
+    add_shortcode('display_medium_posts', 'posts_display');
