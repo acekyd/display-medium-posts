@@ -3,7 +3,7 @@ Contributors: acekyd
 Tags: medium, shortcodes, posts, medium.com
 Donate link: http://www.acekyd.com
 Requires at least: 3.0.1
-Tested up to: 4.6.1
+Tested up to: 4.9.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,12 @@ Nothing at the moment.
 3. Allowed users to choose between carousel or list displays.
 
 == Changelog ==
+
+=Version 3.6 =
+
+* Switched to properly support shared hosting setups (CURL)
+* Title tag can be customized
+* Slight UI changes
 
 = Version 3.5 =
 

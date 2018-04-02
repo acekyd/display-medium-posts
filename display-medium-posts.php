@@ -16,7 +16,7 @@
  * Plugin Name:       Display Medium Posts
  * Plugin URI:        https://github.com/acekyd/display-medium-posts
  * Description:       Display Medium Posts is a wordpress plugin that allows users display posts from medium.com on any part of their website.
- * Version:           3.5.1
+ * Version:           3.6
  * Author:            AceKYD
  * Author URI:        http://www.acekyd.com
  * License:           GPL-2.0+
@@ -91,11 +91,38 @@ run_display_medium_posts();
 		$publication = $a['publication'] =='false' ? false: $a['publication'];
 		$title_tag = $a['title_tag'];
 
-		$ch = curl_init("https://medium.com/" . $handle . "/latest?format=json");
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$result = curl_exec($ch);
+		$content = null;
 
-		$data = str_replace("])}while(1);</x>", "", $result);
+		try {
+			$ch = curl_init();
+
+			if (false === $ch)
+				throw new Exception('failed to initialize');
+
+			curl_setopt($ch, CURLOPT_URL, "https://medium.com/" . $handle . "/latest?format=json");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 120);
+
+			$content = curl_exec($ch);
+
+			if (false === $content)
+				throw new Exception(curl_error($ch), curl_errno($ch));
+
+		// ...process $content now
+		} catch (Exception $e) {
+
+			trigger_error(
+				sprintf(
+					'Curl failed with error #%d: %s',
+					$e->getCode(),
+					$e->getMessage()
+				),
+				E_USER_ERROR
+			);
+
+		}
+
+		$data = str_replace("])}while(1);</x>", "", $content);
 
         if($publication) {
         	//If handle provided is specified as a publication
