@@ -5,4 +5,6 @@
 
  .usage td {
     vertical-align: top;
+    border: 0.5px solid #ccc;
+    padding: 10px;
  }
