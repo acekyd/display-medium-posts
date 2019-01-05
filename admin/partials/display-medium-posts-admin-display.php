@@ -25,7 +25,7 @@
                 <div class="inside">
                     <p>WordPress Display Medium Posts plugin displays the latests posts from a specified user or publication.</p>
 
-                    <h4>For users</h4>
+                    <h2>For user accounts</h2>
 
                     <p>To use this plugin on any page/post, add shortcode with <strong>user</strong> handle e.g <br><span style="color:red">[display_medium_posts handle="@username"]</span></p>
 
@@ -35,17 +35,87 @@
 
                     <i>NB: Do not add "@" for publication handles</i>
 
-                    <h4>Advanced Usage and Customization</h4>
+                    <h2>Advanced Usage and Customization</h2>
                     <p>There are additional features that can be implemented using Display Medium Posts : </p>
+                    <table class="usage">
+                        <tr>
+                            <td>
+                                Attribute
+                            </td>
+                            <td>
+                                Description
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>handle:</b>
+                            </td>
+                            <td>
+                                This is the user's medium handle e.g <strong>@acekyd</strong> or publication handle e.g <strong>devcenter</strong> <i>(Required)</i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>publication:</b>
+                            </td>
+                            <td>
+                                If you would like to show the posts of a publication's specified handle, set this value to true. Default value is false
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>default_image:</b>
+                            </td>
+                            <td>
+                                This is the url of default image that should show when post doesn't have a featured image e.g http://i.imgur.com/p4juyuT.png
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>display:</b>
+                            </td>
+                            <td>
+                                This is the amount of posts that should be displayed at a time e.g display=3
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>offset:</b>
+                            </td>
+                            <td>
+                                This is used when you don't want to display the most recent posts. You can specify the offset to skip the first number of items specified. Default is 0 e.g offset=2
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>total:</b>
+                            </td>
+                            <td>
+                                This is used to specify the amount of posts to fetch. Maximum is 10. This is also useful if you just want to display a single item e.g total=1
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>list:</b>
+                            </td>
+                            <td>
+                                If you would like to show the posts in a list instead of a carousel, set this value to true. Default value is false
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>title_tag:</b>
+                            </td>
+                            <td>
+                                This is used to set a custom tag for the article titles, such as H2, H3, etc. Default value is 'p' e.g title_tag="p"
+                            </td>
+                        </tr>
+                    </table>
                     <ul>
-                        <li><b>handle:</b> This is the user's medium handle e.g <strong>@acekyd</strong> or publication handle e.g <strong>devcenter</strong> <i>(Required)</i></li>
-                        <li><b>publication:</b> If you would like to show the posts of a publication's specified handle, set this value to true. Default value is false</li>
-                        <li><b>default_image:</b> This is the url of default image that should show when post doesn't have a featured image e.g http://i.imgur.com/p4juyuT.png</li>
-                        <li><b>display:</b> This is the amount of posts that should be displayed at a time e.g display=3</li>
-                        <li><b>offset:</b> This is used when you don't want to display the most recent posts. You can specify the offset to skip the first number of items specified. Default is 0 e.g offset=2</li>
-                        <li><b>total:</b> This is used to specify the amount of posts to fetch. Maximum is 10. This is also useful if you just want to display a single item e.g total=1</li>
-                        <li><b>list:</b> If you would like to show the posts in a list instead of a carousel, set this value to true. Default value is false</li>
-                        <li><b>title_tag:</b> This is used to set a custom tag for the article titles, such as H2, H3, etc. Default value is 'p' e.g title_tag="p"</li>
+                        <li> </li>
+                        <li> </li>
+                        <li> </li>
+
                     </ul>
                 </div>
             </div>
