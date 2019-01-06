@@ -141,6 +141,13 @@
                     <p>
                         <h4 style="color:red">If this plugin has helped you, don't hesitate to star the <a href="http://www.github.com/acekyd/display-medium-posts/" target="_blank">Github repo</a> as we continue to ensure this plugin remains free. </h4>
                     </p>
+                    <hr>
+                    <p>
+                        <h4 style="color:red">
+                            Submit feature requests here or see upcoming features on <a href="https://github.com/acekyd/display-medium-posts/issues/24" target="_blank">GitHub</a>
+                        </h4>
+                    </p>
+                    <hr>
                     <p>
                         <h4 style="color:red">
                         If you'd like to reach out to me or donate to this plugin, send me a tweet at <a href="http://twitter.com/ace_kyd">@Ace_KYD</a> or donate via <a href="https://www.paypal.me/adewaleabati" target="_blank">PayPal</a>. Cheers :)</h4>
