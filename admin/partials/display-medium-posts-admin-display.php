@@ -110,13 +110,15 @@
                                 This is used to set a custom tag for the article titles, such as H2, H3, etc. Default value is 'p' e.g title_tag="p"
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <b>date_format:</b>
+                            </td>
+                            <td>
+                                This is only for advanced users or developers. The date format has been updated to reflect exactly as it is shown on medium - <b>Jan 1, 2019</b> using the <b>'M d, Y'</b> format. Pass on custom format to this attribute to change.
+                            </td>
+                        </tr>
                     </table>
-                    <ul>
-                        <li> </li>
-                        <li> </li>
-                        <li> </li>
-
-                    </ul>
                 </div>
             </div>
         </div>

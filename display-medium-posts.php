@@ -77,7 +77,7 @@ run_display_medium_posts();
     // Example 1 : WP Shortcode to display form on any page or post.
     function posts_display($atts){
     	ob_start();
-    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'//i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false, 'publication' => false, 'title_tag' => 'p'), $atts);
+    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'//i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false, 'publication' => false, 'title_tag' => 'p', 'date_format' => 'M d, Y'), $atts);
         // No ID value
         if(strcmp($a['handle'], '-1') == 0){
                 return "";
@@ -90,6 +90,7 @@ run_display_medium_posts();
         $list = $a['list'] =='false' ? false: $a['list'];
 		$publication = $a['publication'] =='false' ? false: $a['publication'];
 		$title_tag = $a['title_tag'];
+		$date_format = $a['date_format'];
 
 		$content = null;
 
@@ -146,7 +147,7 @@ run_display_medium_posts();
 					}
 					$items[$count]['image'] = $image;
 					$items[$count]['duration'] = round($post->virtuals->readingTime);
-					$items[$count]['date'] = isset($post->firstPublishedAt) ? date('Y.m.d', $post->firstPublishedAt/1000): "";
+					$items[$count]['date'] = isset($post->firstPublishedAt) ? date($date_format, $post->firstPublishedAt/1000): "";
 
 					$count++;
 				}
