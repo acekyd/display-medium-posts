@@ -112,6 +112,14 @@
                         </tr>
                         <tr>
                             <td>
+                                <b>tag:</b>
+                            </td>
+                            <td>
+                                This is used to filter Medium posts by tag. E.g tag=learning. A user <b>handle</b> is still required for generating the link but the posts are fetched globally from Medium.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <b>date_format:</b>
                             </td>
                             <td>
