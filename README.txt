@@ -43,6 +43,15 @@ Nothing at the moment.
 
 == Changelog ==
 
+=Version 4.0 =
+
+* Updated Admin page and description guide.
+* Added PayPal donation link
+* Added link to submit feature requests.
+* Changed default date format
+* Added support to customize date formats.
+* Show posts from Tags
+
 =Version 3.6 =
 
 * Switched to properly support shared hosting setups (CURL)
