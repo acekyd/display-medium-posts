@@ -77,7 +77,7 @@ run_display_medium_posts();
     // Example 1 : WP Shortcode to display form on any page or post.
     function posts_display($atts){
     	ob_start();
-    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'//i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false, 'publication' => false, 'title_tag' => 'p', 'date_format' => 'M d, Y'), $atts);
+    	 $a = shortcode_atts(array('handle'=>'-1', 'default_image'=>'//i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false, 'publication' => false, 'title_tag' => 'p', 'tag' => false, 'date_format' => 'M d, Y'), $atts);
         // No ID value
         if(strcmp($a['handle'], '-1') == 0){
                 return "";
@@ -90,9 +90,16 @@ run_display_medium_posts();
         $list = $a['list'] =='false' ? false: $a['list'];
 		$publication = $a['publication'] =='false' ? false: $a['publication'];
 		$title_tag = $a['title_tag'];
+		$tag = $a['tag'];
 		$date_format = $a['date_format'];
 
 		$content = null;
+
+		if($tag)
+		{
+			$medium_url = "https://medium.com/tag/" . $tag . "?format=json";
+		}
+		else $medium_url = "https://medium.com/" . $handle . "/latest?format=json";
 
 		try {
 			$ch = curl_init();
@@ -100,7 +107,7 @@ run_display_medium_posts();
 			if (false === $ch)
 				throw new Exception('failed to initialize');
 
-			curl_setopt($ch, CURLOPT_URL, "https://medium.com/" . $handle . "/latest?format=json");
+			curl_setopt($ch, CURLOPT_URL, $medium_url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 120);
 
