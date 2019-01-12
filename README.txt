@@ -1,7 +1,7 @@
 === Display Medium Posts ===
 Contributors: acekyd
 Tags: medium, shortcodes, posts, medium.com
-Donate link: http://www.acekyd.com
+Donate link: https://www.paypal.me/adewaleabati
 Requires at least: 3.0.1
 Tested up to: 4.9.4
 License: GPLv2 or later
