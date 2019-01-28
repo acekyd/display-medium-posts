@@ -142,9 +142,13 @@
                             [display_medium_posts handle="@acekyd" default_image="http://www.acekyd.com/wp-content/uploads/2014/11/IMG_20150731_220116.png" display=4 offset=2 total=10 list=false title_tag="h2"]
 
                         <br><br>
-                        <strong>Publication - </strong><br><br>
+                        <strong>Publication (Example 1) - </strong> This example fetches the 4 latest articles<br><br>
 
-                            [display_medium_posts handle="devcenter" publication=true default_image="http://www.acekyd.com/wp-content/uploads/2014/11/IMG_20150731_220116.png" display=4 offset=2 total=10 list=false title_tag="h2"]
+                            [display_medium_posts handle="devcenter" publication=true default_image="http://www.acekyd.com/wp-content/uploads/2014/11/IMG_20150731_220116.png" display=4 offset=0 total=10 list=false title_tag="h2"]
+                        <br><br>
+                        <strong>Publication (Example 2)- </strong> This example ignores to 2 latest posts and then fetches the next 4<br><br>
+
+                            [display_medium_posts handle="devcenter" publication=true default_image="http://www.acekyd.com/wp-content/uploads/2014/11/IMG_20150731_220116.png" display=4 offset=0 total=10 list=false title_tag="h2"]
 
                     </p>
                     <br><br>
