@@ -16,7 +16,7 @@
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <div class="wrap">
 
-    <h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+    <h2><?php echo esc_html(get_admin_page_title()); ?></h2>
 
     <div class="metabox-holder">
         <div class="postbox-container" style="width: 55%;margin-right: 10px;">
@@ -25,14 +25,10 @@
                 <div class="inside">
                     <p>WordPress Display Medium Posts plugin displays the latests posts from a specified user or publication.</p>
 
-                    <h2>For user accounts</h2>
+                    <h2>For user accounts and publications</h2>
 
-                    <p>To use this plugin on any page/post, add shortcode with <strong>user</strong> handle e.g <br><span style="color:red">[display_medium_posts handle="@username"]</span></p>
-
-                    <h4>For Publications</h4>
-                    <p>To use this plugin to fetch publication posts, you'd have to get the publication handle from the url as shown https://medium.com/<strong>devcenter</strong>. <strong>devcenter</strong> is the publication's handle. If you are using a custom domain, you should still be able to look up your unique handle in settings.</p>
-                    <p>To use this plugin on any page/post, add shortcode with <strong>publication</strong> handle and set "publication" to true e.g<br> <span style="color:red">[display_medium_posts handle="username" publication=true]</span></p>
-
+                    <p>To use this plugin on any page/post, add shortcode with <strong>user</strong> handle e.g <br><span style="color:red">[display_medium_posts handle="@username"]</span> or <strong>publication</strong> handle without the "@" e.g<span style="color:red">[display_medium_posts handle="morpheus-network"]</span> </p>
+                    <p>If you are using a custom domain, you should still be able to look up your unique handle in settings.</p>
                     <i>NB: Do not add "@" for publication handles</i>
 
                     <h2>Advanced Usage and Customization</h2>
@@ -51,15 +47,7 @@
                                 <b>handle</b>
                             </td>
                             <td>
-                                This is the user's medium handle e.g <strong>@acekyd</strong> or publication handle e.g <strong>devcenter</strong> <i>(Required)</i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <b>publication</b>
-                            </td>
-                            <td>
-                                If you would like to show the posts of a publication's specified handle, set this value to true. Default value is false
+                                This is the user's medium handle e.g <strong>@acekyd</strong> or publication handle e.g <strong>morpheus-network</strong> <i>(Required)</i>
                             </td>
                         </tr>
                         <tr>
@@ -112,14 +100,6 @@
                         </tr>
                         <tr>
                             <td>
-                                <b>tag</b>
-                            </td>
-                            <td>
-                                This is used to filter Medium posts by tag. E.g tag=learning. A user <b>handle</b> is still required for generating the link but the posts are fetched globally from Medium.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
                                 <b>date_format</b>
                             </td>
                             <td>
@@ -139,12 +119,12 @@
                         An example of a full use of the plugin is as follows:<br><br>
                         <strong>User - </strong><br><br>
 
-                            [display_medium_posts handle="@acekyd" default_image="http://www.acekyd.com/wp-content/uploads/2014/11/IMG_20150731_220116.png" display=4 offset=2 total=10 list=false title_tag="h2"]
+                        [display_medium_posts handle="@acekyd" default_image="http://www.acekyd.com/wp-content/uploads/2014/11/IMG_20150731_220116.png" display=4 offset=2 total=10 list=false title_tag="h2"]
 
                         <br><br>
                         <strong>Publication - </strong><br><br>
 
-                            [display_medium_posts handle="devcenter" publication=true default_image="http://www.acekyd.com/wp-content/uploads/2014/11/IMG_20150731_220116.png" display=4 offset=2 total=10 list=false title_tag="h2"]
+                        [display_medium_posts handle="morpheus-network" default_image="http://www.acekyd.com/wp-content/uploads/2014/11/IMG_20150731_220116.png" display=4 offset=2 total=10 list=false title_tag="h2"]
 
                     </p>
                     <br><br>
@@ -160,13 +140,11 @@
                     <hr>
                     <p>
                         <h4 style="color:red">
-                        If you'd like to reach out to me or donate to this plugin, send me a tweet at <a href="http://twitter.com/ace_kyd">@Ace_KYD</a> or donate via <a href="https://www.paypal.me/adewaleabati" target="_blank">PayPal</a>. Cheers :)</h4>
+                            If you'd like to reach out to me or donate to this plugin, send me a tweet at <a href="http://twitter.com/ace_kyd">@Ace_KYD</a> or donate via <a href="https://dashboard.flutterwave.com/donate/optcjuai9jpk" target="_blank">Flutterwave</a>. Cheers :)</h4>
 
-                        <a href="https://www.paypal.me/adewaleabati" target="_blank">
+                        <!-- <a href="https://www.paypal.me/adewaleabati" target="_blank">
                             <img src="https://miamibaysidefoundation.org/wp-content/uploads/2016/07/donate-paypal-1x.png">
-                        </a>
-
-
+                        </a> -->
                     </p>
                 </div>
             </div>
