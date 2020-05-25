@@ -93,7 +93,8 @@ run_display_medium_posts();
 
 		$content = null;
 
-	 $medium_url = "https://medium.com/" . $handle . "/latest?format=json";
+	 $medium_url = "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/" . $handle;
+
 
 		try {
 			$ch = curl_init();
