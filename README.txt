@@ -3,7 +3,7 @@ Contributors: acekyd
 Tags: medium, shortcodes, posts, medium.com
 Donate link: https://www.paypal.me/adewaleabati
 Requires at least: 3.0.1
-Tested up to: 4.9.4
+Tested up to: 5.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,16 @@ Nothing at the moment.
 3. Allowed users to choose between carousel or list displays.
 
 == Changelog ==
+
+=Version 5.0 =
+
+* Solved long time Medium broken bug via RSS
+* No longer shows posts from Tags
+* Time to read no longer visible
+* Some accounts with comments on profile might have difficulty showing blog posts.
+* Publications and User accounts now follow same format
+* Updated PayPal donation link to Flutterwave Donation
+* Updated Admin page and guides to reflect changes
 
 =Version 4.0 =
 

@@ -16,7 +16,7 @@
  * Plugin Name:       Display Medium Posts
  * Plugin URI:        https://github.com/acekyd/display-medium-posts
  * Description:       Display Medium Posts is a wordpress plugin that allows users display posts from medium.com on any part of their website.
- * Version:           4.0
+ * Version:           5.0
  * Author:            AceKYD
  * Author URI:        http://www.acekyd.com
  * License:           GPL-2.0+
