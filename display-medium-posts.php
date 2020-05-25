@@ -82,24 +82,18 @@ run_display_medium_posts();
         if(strcmp($a['handle'], '-1') == 0){
                 return "";
         }
-        $handle=$a['handle'];
-        $default_image = $a['default_image'];
-        $display = $a['display'];
-        $offset = $a['offset'];
-        $total = $a['total'];
-        $list = $a['list'] =='false' ? false: $a['list'];
-		$publication = $a['publication'] =='false' ? false: $a['publication'];
+		$handle = $a['handle'];
+		$default_image = $a['default_image'];
+		$display = $a['display'];
+		$offset = $a['offset'];
+		$total = $a['total'];
+		$list = $a['list'] == 'false' ? false : $a['list'];
 		$title_tag = $a['title_tag'];
-		$tag = $a['tag'];
 		$date_format = $a['date_format'];
 
 		$content = null;
 
-		if($tag)
-		{
-			$medium_url = "https://medium.com/tag/" . $tag . "?format=json";
-		}
-		else $medium_url = "https://medium.com/" . $handle . "/latest?format=json";
+	 $medium_url = "https://medium.com/" . $handle . "/latest?format=json";
 
 		try {
 			$ch = curl_init();
