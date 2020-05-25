@@ -125,82 +125,40 @@ run_display_medium_posts();
 
 		}
 
-		$data = str_replace("])}while(1);</x>", "", $content);
+		$json = json_decode($content);
+		$items = array();
+		$count = 0;
+		if (isset($json->items)) {
+			$posts = $json->items;
+			foreach ($posts as $post) {
+				$items[$count]['title'] = $post->title;
+				$items[$count]['url'] = $post->link;
 
-        if($publication) {
-        	//If handle provided is specified as a publication
-	        $json = json_decode($data);
-			$items = array();
-			$count = 0;
-			if(isset($json->payload->posts))
-			{
-				$posts = $json->payload->posts;
-				foreach($posts as $post)
-				{
-					$items[$count]['title'] = $post->title;
-					$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
-					$items[$count]['subtitle'] = isset($post->virtuals->subtitle) ? $post->virtuals->subtitle : "";
-					if(!empty($post->virtuals->previewImage->imageId))
-					{
-						$image = '//cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
-					}
-					else {
-						$image = $default_image;
-					}
-					$items[$count]['image'] = $image;
-					$items[$count]['duration'] = round($post->virtuals->readingTime);
-					$items[$count]['date'] = isset($post->firstPublishedAt) ? date($date_format, $post->firstPublishedAt/1000): "";
+				$start = strpos($post->description, '<p>');
+				$end = strpos($post->description, '</p>', $start);
+				$paragraph = substr($post->description, $start, $end - $start + 4);
+				$items[$count]['subtitle'] = mb_strimwidth(html_entity_decode(strip_tags($paragraph)), 0, 140, "...");
 
-					$count++;
+				if (!empty($post->thumbnail)) {
+					$image = $post->thumbnail;
+				} else {
+					$image = $default_image;
 				}
-				if($offset)
-				{
-					$items = array_slice($items, $offset);
-				}
+				$items[$count]['image'] = $image;
 
-				if(count($items) > $total)
-				{
-					$items = array_slice($items, 0, $total);
-				}
+				$items[$count]['date'] = date("M j, Y", strtotime($post->pubDate));
+
+				$count++;
 			}
-        }
-        else {
-
-	        $json = json_decode($data);
-			$items = array();
-			$count = 0;
-			if(isset($json->payload->references->Post))
-			{
-				$posts = $json->payload->references->Post;
-				foreach($posts as $post)
-				{
-					$items[$count]['title'] = $post->title;
-					$items[$count]['url'] = 'https://medium.com/'.$handle.'/'.$post->uniqueSlug;
-					$items[$count]['subtitle'] = isset($post->content->subtitle) ? $post->content->subtitle : "";
-					if(!empty($post->virtuals->previewImage->imageId))
-					{
-						$image = '//cdn-images-1.medium.com/max/500/'.$post->virtuals->previewImage->imageId;
-					}
-					else {
-						$image = $default_image;
-					}
-					$items[$count]['image'] = $image;
-					$items[$count]['duration'] = round($post->virtuals->readingTime);
-					$items[$count]['date'] = isset($post->firstPublishedAt) ? date($date_format, $post->firstPublishedAt/1000): "";
-
-					$count++;
-				}
-				if($offset)
-				{
-					$items = array_slice($items, $offset);
-				}
-
-				if(count($items) > $total)
-				{
-					$items = array_slice($items, 0, $total);
-				}
+			if ($offset) {
+				$items = array_slice($items, $offset);
 			}
-        }
+
+			if (count($items) > $total) {
+				$items = array_slice($items, 0, $total);
+			}
+		}
+
     	?>
 		<div id="display-medium-owl-demo" class="display-medium-owl-carousel">
 			<?php foreach($items as $item) { ?>
