@@ -78,7 +78,7 @@ run_display_medium_posts();
 function posts_display($atts)
 {
 	ob_start();
-	$a = shortcode_atts(array('handle' => '-1', 'default_image' => '//i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false, 'title_tag' => 'p',  'date_format' => 'M d, Y'), $atts);
+	$a = shortcode_atts(array('handle' => '-1', 'default_image' => '//i.imgur.com/p4juyuT.png', 'display' => 3, 'offset' => 0, 'total' => 10, 'list' => false, 'title_tag' => 'p',  'date_format' => 'M d, Y', 'readmore_text' => 'Read More', 'hide_subtitle' => false), $atts);
 	// No ID value
 	if (strcmp($a['handle'], '-1') == 0) {
 		return "";
@@ -91,7 +91,8 @@ function posts_display($atts)
 	$list = $a['list'] == 'false' ? false : $a['list'];
 	$title_tag = $a['title_tag'];
 	$date_format = $a['date_format'];
-
+	$readmore_text = $a['readmore_text'];
+	$hide_subtitle = $a['hide_subtitle'] == 'false' ? false : $a['hide_subtitle'];
 	$content = null;
 
 	$medium_url = "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/" . $handle;
@@ -173,12 +174,16 @@ function posts_display($atts)
 					?>
 					<<?php echo $title_tag; ?> class="display-medium-title details-title"><?php echo $item['title']; ?></<?php echo $title_tag; ?>>
 				</a>
-				<p class="display-medium-subtitle">
-					<?php echo $item['subtitle']; ?>
+				<?php 
+				if ($hide_subtitle == false){ 
+					echo "<p class='display-medium-subtitle'>" . $item['subtitle'] . "</p>";
+				} else {
+				}
+				?>
 				</p>
 				<p class="display-medium-date-read">
 					<?php echo "<span class='display-medium-date'>" . $item['date'] . "</span>"; ?> /
-					<a href="<?php echo $item['url']; ?>" target="_blank" class="text-right display-medium-readmore">Read More</a>
+					<a href="<?php echo $item['url']; ?>" target="_blank" class="text-right display-medium-readmore"><?php echo $readmore_text?></a>
 				</p>
 			</div>
 
